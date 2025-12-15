@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Lempel-Ziv Coding (LZ78)</h2>
+    <a href="/" class="btn btn-secondary btn-sm">Back Home</a>
+</div>
+
+<div class="card shadow border-0">
+    <div class="card-body p-4">
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+            <div class="mb-4">
+                <label class="form-label fw-bold">Select Function</label>
+                <select name="mode" id="modeSelector" class="form-select" onchange="toggleMode()">
+                    <option value="encoder" {% if mode == 'encoder' %}selected{% endif %}>Encoder</option>
+                    <option value="decoder" {% if mode == 'decoder' %}selected{% endif %}>Decoder</option>
+                </select>
+            </div>
+
+            <!-- ENCODER FIELDS -->
+            <div id="encoderFields" style="display: {% if mode == 'encoder' %}block{% else %}none{% endif %};">
+                <div class="mb-3">
+                    <label class="form-label">Sequence of Symbols</label>
+                    <textarea name="text_input" class="form-control" rows="3" placeholder="Enter text here...">{{ input_text }}</textarea>
+                </div>
+            </div>
+
+            <!-- DECODER FIELDS -->
+            <div id="decoderFields" style="display: {% if mode == 'decoder' %}block{% else %}none{% endif %};">
+                <div class="mb-3">
+                    <label class="form-label">Binary Sequence</label>
+                    <textarea name="binary_input" class="form-control" rows="3"></textarea>
+                </div>
+                <!-- Removed Index Bits Input -->
+                <div class="mb-3">
+                    <label class="form-label">Alphabet (Unique Chars)</label>
+                    <input type="text" name="alphabet_input" class="form-control" placeholder="e.g. ABC">
+                    <div class="form-text">Required to determine character bit width.</div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 mt-3">Execute</button>
+        </form>
+
+        {% if result %}
+        <hr class="my-4">
+        <h4 class="text-success">Results</h4>
+        
+        {% if result.type == 'encoding' %}
+            <div class="alert alert-light border">
+                <strong>Binary Output:</strong>
+                <p class="text-break font-monospace">{{ result.binary }}</p>
+                
+                <!-- Main Metrics Row -->
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        <strong>Efficiency:</strong> {{ result.efficiency }}%
+                    </div>
+                    <div class="col-md-3">
+                        <strong>Original Length:</strong> {{ result.length }}
+                    </div>
+                    <div class="col-md-3">
+                        <strong>Compressed:</strong> {{ result.comp_len }} bits
+                    </div>
+                    <div class="col-md-3">
+                        <strong>Fixed-Length:</strong> {{ result.fix_len }} bits
+                    </div>
+                </div>
+
+                <!-- Secondary Info Row (Alphabet Only) -->
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <strong>Alphabet:</strong> 
+                        <!-- Used input box for copy-paste safety -->
+                        <input type="text" class="form-control font-monospace" value="{{ result.unique_symbols }}" readonly onclick="this.select()">
+                        <div class="form-text text-muted">Click to select all (including spaces).</div>
+                    </div>
+                </div>
+            </div>
+        {% elif result.type == 'decoding' %}
+            <div class="alert alert-light border">
+                <strong>Decoded Sequence:</strong>
+                <p class="lead">{{ result.text }}</p>
+            </div>
+        {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "layout.html" %} {% block content %}
+<div class="text-center mb-5">
+  <h1 class="display-4 fw-bold text-primary">Information Theory & Coding</h1>
+  <p class="lead text-secondary">Universal Source Encoder/Decoder Project</p>
+</div>
+
+<div class="row justify-content-center mb-5">
+  <div class="col-md-8">
+    <div class="card shadow-lg border-0">
+      <div class="card-body text-center p-5">
+        <h3 class="mb-4">Developed By</h3>
+        <div class="list-group list-group-flush text-start d-inline-block">
+          <div class="list-group-item border-0">
+            <span class="fw-bold text-primary">Ibrahim Hanafy</span>
+            <span class="float-end ms-4 badge bg-secondary">202200518</span>
+          </div>
+          <div class="list-group-item border-0">
+            <span class="fw-bold text-primary">Mai Ibrahim</span>
+            <span class="float-end ms-4 badge bg-secondary">202200504</span>
+          </div>
+          <div class="list-group-item border-0">
+            <span class="fw-bold text-primary">Khaled Mahmoud</span>
+            <span class="float-end ms-4 badge bg-secondary">202200282</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row text-center">
+  <div class="col-md-6 mb-3">
+    <a
+      href="/arithmetic"
+      class="btn btn-outline-primary btn-lg w-100 py-4 shadow-sm hover-card"
+    >
+      <h4 class="mb-0">Adaptive Arithmetic Coding</h4>
+      <small>Part I</small>
+    </a>
+  </div>
+  <div class="col-md-6 mb-3">
+    <a
+      href="/limpell_ziv"
+      class="btn btn-outline-success btn-lg w-100 py-4 shadow-sm hover-card"
+    >
+      <h4 class="mb-0">Lempel-Ziv Coding</h4>
+      <small>Part II</small>
+    </a>
+  </div>
+</div>
+{% endblock %}
